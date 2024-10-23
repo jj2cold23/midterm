@@ -1,0 +1,70 @@
+Instructions
+Submit video (mp4), and github.io link.
+In the video, just explain your code line by line. show how the code affects what's displayed in the web app. For example, enter the first borrowing year and show how the code updates the other borrowing years. Do that for the whole program. 
+If you don't want to do a video, you can present in person in class, or one-one-one with professor. 
+Details
+Implement the code in the practice midterm.
+Revise the code so borrowing years 2, 3 and 4 are generated properly based on borrowing year 1. Do not let user modify them
+Revise the code so the output is a table showing payment, interest amount, principal amount for each year, not just total debt and one payment
+Screenshot of the original app
+cis255 practice midterm 2024 web app screenshot.png
+
+Screenshot of the revised app (just an example. yours will look different.)
+cis255 practice midterm 2024 web app screenshot REVISED.png
+
+Code from practice midterm
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loan Amortization Calculator</title>
+</head>
+<body>
+<h2>Loan and Amortization Calculator</h2>
+<form id="loanForm">
+<label for="borrowingYear1">Borrowing Year 1:</label>
+<input type="number" id="borrowingYear1" required><br><br>
+<label for="loanAmt1">Loan Amount 1:</label>
+<input type="number" id="loanAmt1" step="0.01" required><br><br>
+<label for="borrowingYear2">Borrowing Year 2:</label>
+<input type="number" id="borrowingYear2" required><br><br>
+<label for="loanAmt2">Loan Amount 2:</label>
+<input type="number" id="loanAmt2" step="0.01" required><br><br>
+<label for="borrowingYear3">Borrowing Year 3:</label>
+<input type="number" id="borrowingYear3" required><br><br>
+<label for="loanAmt3">Loan Amount 3:</label>
+<input type="number" id="loanAmt3" step="0.01" required><br><br>
+<label for="borrowingYear4">Borrowing Year 4:</label>
+<input type="number" id="borrowingYear4" required><br><br>
+<label for="loanAmt4">Loan Amount 4:</label>
+<input type="number" id="loanAmt4" step="0.01" required><br><br>
+<button type="button" onclick="calculateDebt()">Calculate</button>
+</form>
+<h3>Results</h3>
+<p id="totalDebt">Total Debt: </p>
+<p id="amortization">Annual Amortization Payments: </p>
+<script>
+function calculateDebt() {
+const borrowingYear1 = parseInt(document.getElementById('borrowingYear1').value);
+const loanAmt1 = parseFloat(document.getElementById('loanAmt1').value);
+const borrowingYear2 = parseInt(document.getElementById('borrowingYear2').value);
+const loanAmt2 = parseFloat(document.getElementById('loanAmt2').value);
+const borrowingYear3 = parseInt(document.getElementById('borrowingYear3').value);
+const loanAmt3 = parseFloat(document.getElementById('loanAmt3').value);
+const borrowingYear4 = parseInt(document.getElementById('borrowingYear4').value);
+const loanAmt4 = parseFloat(document.getElementById('loanAmt4').value);
+const interestRate = 0.05; // 5% interest
+const yearsBetween1and4 = borrowingYear4 - borrowingYear1;
+let totalDebt = loanAmt1 * Math.pow(1 + interestRate, yearsBetween1and4) +
+loanAmt2 * Math.pow(1 + interestRate, yearsBetween1and4 - 1) +
+loanAmt3 * Math.pow(1 + interestRate, yearsBetween1and4 - 2) +
+loanAmt4; // Last loan has no interest yet
+const repaymentYears = 10;
+const amortization = (totalDebt * interestRate) / (1 - Math.pow(1 + interestRate, -repaymentYears));
+document.getElementById('totalDebt').textContent = `Total Debt: $${totalDebt.toFixed(2)}`;
+document.getElementById('amortization').textContent = `Annual Amortization Payments: $${amortization.toFixed(2)}`;
+}
+</script>
+</body>
+</html>
